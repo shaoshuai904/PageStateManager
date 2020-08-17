@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PageStatusManager</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_fragment_test">FragmentTestActivity</string>
+
 </resources>
