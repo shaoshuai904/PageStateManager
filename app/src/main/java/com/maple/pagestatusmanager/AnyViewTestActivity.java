@@ -7,15 +7,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestatusmanager.utils.LoadingAndRetryManager;
-import com.maple.pagestatusmanager.utils.OnLoadingAndRetryListener;
+import com.maple.pagestatusmanager.utils.PageStatusManager;
+import com.maple.pagestatusmanager.utils.OnPageStatusListener;
 
 
 public class AnyViewTestActivity extends AppCompatActivity {
 
     private TextView mTextView;
 
-    LoadingAndRetryManager mLoadingAndRetryManager;
+    PageStatusManager pageStatusManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +24,18 @@ public class AnyViewTestActivity extends AppCompatActivity {
 
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(mTextView, new OnLoadingAndRetryListener() {
+        pageStatusManager = PageStatusManager.generate(mTextView, new OnPageStatusListener() {
             @Override
             public void setRetryEvent(View retryView) {
-                retryRefreashTextView(retryView);
+                retryRefreshTextView(retryView);
             }
         });
 
-        refreashTextView();
+        refreshTextView();
     }
 
-    private void refreashTextView() {
-        mLoadingAndRetryManager.showLoading();
+    private void refreshTextView() {
+        pageStatusManager.showLoading();
 
         new Thread() {
             @Override
@@ -46,9 +46,9 @@ public class AnyViewTestActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (Math.random() > 0.6) {
-                    mLoadingAndRetryManager.showContent();
+                    pageStatusManager.showContent();
                 } else {
-                    mLoadingAndRetryManager.showRetry();
+                    pageStatusManager.showRetry();
                 }
             }
         }.start();
@@ -56,13 +56,13 @@ public class AnyViewTestActivity extends AppCompatActivity {
 
     }
 
-    public void retryRefreashTextView(View retryView) {
+    public void retryRefreshTextView(View retryView) {
         View view = retryView.findViewById(R.id.id_btn_retry);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
-                AnyViewTestActivity.this.refreashTextView();
+                AnyViewTestActivity.this.refreshTextView();
             }
         });
     }

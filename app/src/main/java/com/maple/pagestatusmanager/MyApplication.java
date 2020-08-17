@@ -2,7 +2,7 @@ package com.maple.pagestatusmanager;
 
 import android.app.Application;
 
-import com.maple.pagestatusmanager.utils.LoadingAndRetryManager;
+import com.maple.pagestatusmanager.utils.PageStatusManager;
 
 
 /**
@@ -12,8 +12,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LoadingAndRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.base_retry;
-        LoadingAndRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.base_loading;
-        LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
+        PageStatusManager.BASE_RETRY_LAYOUT_ID = R.layout.base_retry;
+        PageStatusManager.BASE_LOADING_LAYOUT_ID = R.layout.base_loading;
+        PageStatusManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
     }
 }

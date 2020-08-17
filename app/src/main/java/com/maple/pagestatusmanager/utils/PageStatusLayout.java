@@ -9,27 +9,30 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 /**
- * Created by zhy on 15/8/26.
+ * 状态布局
+ *
+ * @author : shaoshuai27
+ * @date ：2020/8/17
  */
-public class LoadingAndRetryLayout extends FrameLayout {
+public class PageStatusLayout extends FrameLayout {
     private View mLoadingView;
     private View mRetryView;
     private View mContentView;
     private View mEmptyView;
     private LayoutInflater mInflater;
 
-    private static final String TAG = LoadingAndRetryLayout.class.getSimpleName();
+    private static final String TAG = PageStatusLayout.class.getSimpleName();
 
-    public LoadingAndRetryLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PageStatusLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mInflater = LayoutInflater.from(context);
     }
 
-    public LoadingAndRetryLayout(Context context, AttributeSet attrs) {
+    public PageStatusLayout(Context context, AttributeSet attrs) {
         this(context, attrs, -1);
     }
 
-    public LoadingAndRetryLayout(Context context) {
+    public PageStatusLayout(Context context) {
         this(context, null);
     }
 
@@ -150,7 +153,7 @@ public class LoadingAndRetryLayout extends FrameLayout {
     public View setLoadingView(View view) {
         View loadingView = mLoadingView;
         if (loadingView != null) {
-            Log.w(TAG, "you have already set a loading view and would be instead of this new one.");
+            Log.w(TAG, "已设置的LoadingView将被取代");
         }
         removeView(loadingView);
         addView(view);

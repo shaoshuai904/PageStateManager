@@ -6,19 +6,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestatusmanager.utils.LoadingAndRetryManager;
-import com.maple.pagestatusmanager.utils.OnLoadingAndRetryListener;
+import com.maple.pagestatusmanager.utils.PageStatusManager;
+import com.maple.pagestatusmanager.utils.OnPageStatusListener;
 
 
 public class MainActivity extends AppCompatActivity {
-    LoadingAndRetryManager mLoadingAndRetryManager;
+    PageStatusManager pageStatusManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(this, new OnLoadingAndRetryListener() {
+        pageStatusManager = PageStatusManager.generate(this, new OnPageStatusListener() {
             @Override
             public void setRetryEvent(View retryView) {
                 MainActivity.this.setRetryEvent(retryView);
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        mLoadingAndRetryManager.showLoading();
+        pageStatusManager.showLoading();
 
         new Thread() {
             @Override
@@ -41,15 +41,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 double v = Math.random();
                 if (v > 0.8) {
-                    mLoadingAndRetryManager.showContent();
+                    pageStatusManager.showContent();
                 } else if (v > 0.4) {
-                    mLoadingAndRetryManager.showRetry();
+                    pageStatusManager.showRetry();
                 } else {
-                    mLoadingAndRetryManager.showEmpty();
+                    pageStatusManager.showEmpty();
                 }
             }
         }.start();
-
     }
 
 

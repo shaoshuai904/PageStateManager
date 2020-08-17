@@ -8,28 +8,26 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 /**
- * Created by zhy on 15/8/27.
+ * 页面状态管理者
+ *
+ * @author : shaoshuai27
+ * @date ：2020/8/17
  */
-public class LoadingAndRetryManager {
+public class PageStatusManager {
     public static final int NO_LAYOUT_ID = 0;
     public static int BASE_LOADING_LAYOUT_ID = NO_LAYOUT_ID;
     public static int BASE_RETRY_LAYOUT_ID = NO_LAYOUT_ID;
     public static int BASE_EMPTY_LAYOUT_ID = NO_LAYOUT_ID;
 
-    public LoadingAndRetryLayout mLoadingAndRetryLayout;
+    public PageStatusLayout mPageStatusLayout;
 
-    public OnLoadingAndRetryListener DEFAULT_LISTENER = new OnLoadingAndRetryListener() {
-        @Override
-        public void setRetryEvent(View retryView) {
+    public OnPageStatusListener DEFAULT_LISTENER = new OnPageStatusListener();
 
-        }
-    };
-
-    public static LoadingAndRetryManager generate(Object activityOrFragment, OnLoadingAndRetryListener listener) {
-        return new LoadingAndRetryManager(activityOrFragment, listener);
+    public static PageStatusManager generate(Object activityOrFragment, OnPageStatusListener listener) {
+        return new PageStatusManager(activityOrFragment, listener);
     }
 
-    public LoadingAndRetryManager(Object activityOrFragmentOrView, OnLoadingAndRetryListener listener) {
+    public PageStatusManager(Object activityOrFragmentOrView, OnPageStatusListener listener) {
         if (listener == null) listener = DEFAULT_LISTENER;
 
         ViewGroup contentParent = null;
@@ -66,80 +64,79 @@ public class LoadingAndRetryManager {
         }
         contentParent.removeView(oldContent);
         //setup content layout
-        LoadingAndRetryLayout loadingAndRetryLayout = new LoadingAndRetryLayout(context);
+        PageStatusLayout pageStatusLayout = new PageStatusLayout(context);
 
         ViewGroup.LayoutParams lp = oldContent.getLayoutParams();
-        contentParent.addView(loadingAndRetryLayout, index, lp);
-        loadingAndRetryLayout.setContentView(oldContent);
+        contentParent.addView(pageStatusLayout, index, lp);
+        pageStatusLayout.setContentView(oldContent);
         // setup loading,retry,empty layout
-        setupLoadingLayout(listener, loadingAndRetryLayout);
-        setupRetryLayout(listener, loadingAndRetryLayout);
-        setupEmptyLayout(listener, loadingAndRetryLayout);
-        //callback
-        listener.setRetryEvent(loadingAndRetryLayout.getRetryView());
-        listener.setLoadingEvent(loadingAndRetryLayout.getLoadingView());
-        listener.setEmptyEvent(loadingAndRetryLayout.getEmptyView());
-        mLoadingAndRetryLayout = loadingAndRetryLayout;
+        setupLoadingLayout(listener, pageStatusLayout);
+        setupRetryLayout(listener, pageStatusLayout);
+        setupEmptyLayout(listener, pageStatusLayout);
+        // callback
+        listener.setRetryEvent(pageStatusLayout.getRetryView());
+        listener.setLoadingEvent(pageStatusLayout.getLoadingView());
+        listener.setEmptyEvent(pageStatusLayout.getEmptyView());
+        mPageStatusLayout = pageStatusLayout;
     }
 
-    private void setupEmptyLayout(OnLoadingAndRetryListener listener, LoadingAndRetryLayout loadingAndRetryLayout) {
+    private void setupEmptyLayout(OnPageStatusListener listener, PageStatusLayout pageStatusLayout) {
         if (listener.isSetEmptyLayout()) {
             int layoutId = listener.generateEmptyLayoutId();
             if (layoutId != NO_LAYOUT_ID) {
-                loadingAndRetryLayout.setEmptyView(layoutId);
+                pageStatusLayout.setEmptyView(layoutId);
             } else {
-                loadingAndRetryLayout.setEmptyView(listener.generateEmptyLayout());
+                pageStatusLayout.setEmptyView(listener.generateEmptyLayout());
             }
         } else {
             if (BASE_EMPTY_LAYOUT_ID != NO_LAYOUT_ID)
-                loadingAndRetryLayout.setEmptyView(BASE_EMPTY_LAYOUT_ID);
+                pageStatusLayout.setEmptyView(BASE_EMPTY_LAYOUT_ID);
         }
     }
 
-    private void setupLoadingLayout(OnLoadingAndRetryListener listener, LoadingAndRetryLayout loadingAndRetryLayout) {
+    private void setupLoadingLayout(OnPageStatusListener listener, PageStatusLayout pageStatusLayout) {
         if (listener.isSetLoadingLayout()) {
             int layoutId = listener.generateLoadingLayoutId();
             if (layoutId != NO_LAYOUT_ID) {
-                loadingAndRetryLayout.setLoadingView(layoutId);
+                pageStatusLayout.setLoadingView(layoutId);
             } else {
-                loadingAndRetryLayout.setLoadingView(listener.generateLoadingLayout());
+                pageStatusLayout.setLoadingView(listener.generateLoadingLayout());
             }
         } else {
             if (BASE_LOADING_LAYOUT_ID != NO_LAYOUT_ID)
-                loadingAndRetryLayout.setLoadingView(BASE_LOADING_LAYOUT_ID);
+                pageStatusLayout.setLoadingView(BASE_LOADING_LAYOUT_ID);
         }
     }
 
-    private void setupRetryLayout(OnLoadingAndRetryListener listener, LoadingAndRetryLayout loadingAndRetryLayout) {
+    private void setupRetryLayout(OnPageStatusListener listener, PageStatusLayout pageStatusLayout) {
         if (listener.isSetRetryLayout()) {
             int layoutId = listener.generateRetryLayoutId();
             if (layoutId != NO_LAYOUT_ID) {
-                loadingAndRetryLayout.setLoadingView(layoutId);
+                pageStatusLayout.setLoadingView(layoutId);
             } else {
-                loadingAndRetryLayout.setLoadingView(listener.generateRetryLayout());
+                pageStatusLayout.setLoadingView(listener.generateRetryLayout());
             }
         } else {
             if (BASE_RETRY_LAYOUT_ID != NO_LAYOUT_ID)
-                loadingAndRetryLayout.setRetryView(BASE_RETRY_LAYOUT_ID);
+                pageStatusLayout.setRetryView(BASE_RETRY_LAYOUT_ID);
         }
     }
 
 
     public void showLoading() {
-        mLoadingAndRetryLayout.showLoading();
+        mPageStatusLayout.showLoading();
     }
 
     public void showRetry() {
-        mLoadingAndRetryLayout.showRetry();
+        mPageStatusLayout.showRetry();
     }
 
     public void showContent() {
-        mLoadingAndRetryLayout.showContent();
+        mPageStatusLayout.showContent();
     }
 
     public void showEmpty() {
-        mLoadingAndRetryLayout.showEmpty();
+        mPageStatusLayout.showEmpty();
     }
-
 
 }

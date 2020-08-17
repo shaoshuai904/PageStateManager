@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:gravity="center"
-        android:text="NormalTextView" />
+        android:text="一个普普通通的TextView" />
 
     <TextView
         android:layout_width="match_parent"

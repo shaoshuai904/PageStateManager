@@ -2,8 +2,15 @@ package com.maple.pagestatusmanager.utils;
 
 import android.view.View;
 
-public abstract class OnLoadingAndRetryListener {
-    public abstract void setRetryEvent(View retryView);
+/**
+ * 页面状态监听
+ *
+ * @author : shaoshuai27
+ * @date ：2020/8/17
+ */
+public class OnPageStatusListener {
+    public void setRetryEvent(View retryView) {
+    }
 
     public void setLoadingEvent(View loadingView) {
     }
@@ -12,15 +19,15 @@ public abstract class OnLoadingAndRetryListener {
     }
 
     public int generateLoadingLayoutId() {
-        return LoadingAndRetryManager.NO_LAYOUT_ID;
+        return PageStatusManager.NO_LAYOUT_ID;
     }
 
     public int generateRetryLayoutId() {
-        return LoadingAndRetryManager.NO_LAYOUT_ID;
+        return PageStatusManager.NO_LAYOUT_ID;
     }
 
     public int generateEmptyLayoutId() {
-        return LoadingAndRetryManager.NO_LAYOUT_ID;
+        return PageStatusManager.NO_LAYOUT_ID;
     }
 
     public View generateLoadingLayout() {
@@ -36,19 +43,19 @@ public abstract class OnLoadingAndRetryListener {
     }
 
     public boolean isSetLoadingLayout() {
-        if (generateLoadingLayoutId() != LoadingAndRetryManager.NO_LAYOUT_ID || generateLoadingLayout() != null)
+        if (generateLoadingLayoutId() != PageStatusManager.NO_LAYOUT_ID || generateLoadingLayout() != null)
             return true;
         return false;
     }
 
     public boolean isSetRetryLayout() {
-        if (generateRetryLayoutId() != LoadingAndRetryManager.NO_LAYOUT_ID || generateRetryLayout() != null)
+        if (generateRetryLayoutId() != PageStatusManager.NO_LAYOUT_ID || generateRetryLayout() != null)
             return true;
         return false;
     }
 
     public boolean isSetEmptyLayout() {
-        if (generateEmptyLayoutId() != LoadingAndRetryManager.NO_LAYOUT_ID || generateEmptyLayout() != null)
+        if (generateEmptyLayoutId() != PageStatusManager.NO_LAYOUT_ID || generateEmptyLayout() != null)
             return true;
         return false;
     }
