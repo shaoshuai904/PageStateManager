@@ -13,122 +13,85 @@ import kotlin.math.max
  * @author : shaoshuai27
  * @date ：2020/8/17
  */
-class PageStatusManager(
-    private val activityOrFragmentOrView: Any?,
-    private val listener: OnPageStatusListener = OnPageStatusListener()
-) {
-    private var mPageStatusLayout: PageStatusLayout
+class PageStatusManager {
+    private lateinit var mPageStatusLayout: PageStatusLayout
+    private lateinit var mContext: Context
 
     companion object {
         const val NO_LAYOUT_ID = 0
 
         @JvmField
-        var BASE_LOADING_LAYOUT_ID = NO_LAYOUT_ID
+        var BASE_LOADING_LAYOUT_ID: Int = NO_LAYOUT_ID
 
         @JvmField
-        var BASE_RETRY_LAYOUT_ID = NO_LAYOUT_ID
+        var BASE_RETRY_LAYOUT_ID: Int = NO_LAYOUT_ID
 
         @JvmField
-        var BASE_EMPTY_LAYOUT_ID = NO_LAYOUT_ID
+        var BASE_EMPTY_LAYOUT_ID: Int = NO_LAYOUT_ID
     }
 
 
-    init {
-        val context: Context?
-        val contentParent: ViewGroup
-        val oldContent: View
-        var index = 0
-        when (activityOrFragmentOrView) {
-            is Activity -> {
-                context = this.activityOrFragmentOrView
-                contentParent = activityOrFragmentOrView.findViewById(android.R.id.content) as ViewGroup
-                oldContent = contentParent.getChildAt(0)
-            }
-            is Fragment -> {
-                context = activityOrFragmentOrView.activity
-                contentParent = activityOrFragmentOrView.view?.parent as ViewGroup
-                oldContent = contentParent.getChildAt(0)
-            }
-            is View -> {
-                contentParent = activityOrFragmentOrView.parent as ViewGroup
-                context = activityOrFragmentOrView.context
-                oldContent = activityOrFragmentOrView
-                index = contentParent.indexOfChild(oldContent)
-            }
-            else -> {
-                throw IllegalArgumentException("the argument's type must be Fragment or Activity: init(context)")
-            }
-        }
+    constructor(activity: Activity) {
+        this.mContext = activity
+        val contentParent = activity.findViewById(android.R.id.content) as ViewGroup
+        initView(contentParent)
+    }
 
+    constructor(fragment: Fragment) {
+        this.mContext = fragment.requireContext()
+        val contentParent = fragment.view?.parent as ViewGroup
+        initView(contentParent)
+    }
 
+    constructor(view: View) {
+        this.mContext = view.context
+        val contentParent = view.parent as ViewGroup
+        val index = max(contentParent.indexOfChild(view), 0)// 可能为-1，修正为0
+        initView(contentParent, index)
+    }
+
+    private fun initView(contentParent: ViewGroup, index: Int = 0) {
+        val oldContent = contentParent.getChildAt(index)
         contentParent.removeView(oldContent)
-        val pageStatusLayout = PageStatusLayout(context!!)
-        // 可能为-1，修正为0
-        contentParent.addView(pageStatusLayout, max(index, 0), oldContent.layoutParams)
-        pageStatusLayout.setContentView(oldContent)
-        setupLoadingLayout(listener, pageStatusLayout)
-        setupRetryLayout(listener, pageStatusLayout)
-        setupEmptyLayout(listener, pageStatusLayout)
-        listener.setRetryEvent(pageStatusLayout.getRetryView())
-        listener.setLoadingEvent(pageStatusLayout.getLoadingView())
-        listener.setEmptyEvent(pageStatusLayout.getEmptyView())
-        mPageStatusLayout = pageStatusLayout
+        mPageStatusLayout = PageStatusLayout(mContext)
+        mPageStatusLayout.setContentView(oldContent)
+        contentParent.addView(mPageStatusLayout, index, oldContent.layoutParams)
+
+        // 初始化默认配置页面
+        setLoadingView(BASE_LOADING_LAYOUT_ID)
+        setRetryView(BASE_RETRY_LAYOUT_ID)
+        setEmptyView(BASE_EMPTY_LAYOUT_ID)
     }
 
-    private fun setupEmptyLayout(listener: OnPageStatusListener?, pageStatusLayout: PageStatusLayout) {
-        if (listener?.isSetEmptyLayout() == true) {
-            val layoutId = listener.generateEmptyLayoutId()
-            if (layoutId != NO_LAYOUT_ID) {
-                pageStatusLayout.setEmptyView(layoutId)
-            } else {
-                pageStatusLayout.setEmptyView(listener.generateEmptyLayout())
-            }
-        } else {
-            if (BASE_EMPTY_LAYOUT_ID != NO_LAYOUT_ID) pageStatusLayout.setEmptyView(BASE_EMPTY_LAYOUT_ID)
-        }
+    // 设置页面回调
+    fun setPageCallBack(mConfig: PageCallBack = PageCallBack()): PageStatusManager {
+        mConfig.setRetryEvent(mPageStatusLayout.getRetryView())
+        mConfig.setLoadingEvent(mPageStatusLayout.getLoadingView())
+        mConfig.setEmptyEvent(mPageStatusLayout.getEmptyView())
+        return this
     }
 
-    private fun setupLoadingLayout(listener: OnPageStatusListener?, pageStatusLayout: PageStatusLayout) {
-        if (listener!!.isSetLoadingLayout()) {
-            val layoutId = listener.generateLoadingLayoutId()
-            if (layoutId != NO_LAYOUT_ID) {
-                pageStatusLayout.setLoadingView(layoutId)
-            } else {
-                pageStatusLayout.setLoadingView(listener.generateLoadingLayout())
-            }
-        } else {
-            if (BASE_LOADING_LAYOUT_ID != NO_LAYOUT_ID) pageStatusLayout.setLoadingView(BASE_LOADING_LAYOUT_ID)
-        }
+    open class PageCallBack {
+        open fun setRetryEvent(retryView: View?) {}
+        open fun setLoadingEvent(loadingView: View?) {}
+        open fun setEmptyEvent(emptyView: View?) {}
     }
 
-    private fun setupRetryLayout(listener: OnPageStatusListener?, pageStatusLayout: PageStatusLayout) {
-        if (listener!!.isSetRetryLayout()) {
-            val layoutId = listener.generateRetryLayoutId()
-            if (layoutId != NO_LAYOUT_ID) {
-                pageStatusLayout.setLoadingView(layoutId)
-            } else {
-                pageStatusLayout.setLoadingView(listener.generateRetryLayout())
-            }
-        } else {
-            if (BASE_RETRY_LAYOUT_ID != NO_LAYOUT_ID) pageStatusLayout.setRetryView(BASE_RETRY_LAYOUT_ID)
-        }
-    }
+    fun showLoading() = mPageStatusLayout.showLoading()
+    fun showRetry() = mPageStatusLayout.showRetry()
+    fun showContent() = mPageStatusLayout.showContent()
+    fun showEmpty() = mPageStatusLayout.showEmpty()
 
-    fun showLoading() {
-        mPageStatusLayout.showLoading()
-    }
+    // 设置状态图
+    fun setLoadingView(layoutId: Int) = mPageStatusLayout.setLoadingView(layoutId)
+    fun setRetryView(layoutId: Int) = mPageStatusLayout.setRetryView(layoutId)
+    fun setEmptyView(layoutId: Int) = mPageStatusLayout.setEmptyView(layoutId)
+    fun setContentView(layoutId: Int) = mPageStatusLayout.setContentView(layoutId)
 
-    fun showRetry() {
-        mPageStatusLayout.showRetry()
-    }
-
-    fun showContent() {
-        mPageStatusLayout.showContent()
-    }
-
-    fun showEmpty() {
-        mPageStatusLayout.showEmpty()
-    }
-
+    // 设置状态图
+    fun setLoadingView(view: View?) = mPageStatusLayout.setLoadingView(view)
+    fun setRetryView(view: View?) = mPageStatusLayout.setRetryView(view)
+    fun setEmptyView(view: View?) = mPageStatusLayout.setEmptyView(view)
+    fun setContentView(view: View?) = mPageStatusLayout.setContentView(view)
 
 }

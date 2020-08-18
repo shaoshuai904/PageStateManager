@@ -7,7 +7,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.maple.pagestatusmanager.utils.PageStatusManager;
-import com.maple.pagestatusmanager.utils.OnPageStatusListener;
+
+import org.jetbrains.annotations.Nullable;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,12 +19,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pageStatusManager = new PageStatusManager(this, new OnPageStatusListener() {
-            @Override
-            public void setRetryEvent(View retryView) {
-                MainActivity.this.setRetryEvent(retryView);
-            }
-        });
+        pageStatusManager = new PageStatusManager(this)
+                .setPageCallBack(new PageStatusManager.PageCallBack() {
+                    @Override
+                    public void setRetryEvent(@Nullable View retryView) {
+                        View view = retryView.findViewById(R.id.id_btn_retry);
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(MainActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
+                                loadData();
+                            }
+                        });
+                    }
+                });
 
         loadData();
     }
@@ -51,15 +60,4 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-
-    public void setRetryEvent(View retryView) {
-        View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
-                loadData();
-            }
-        });
-    }
 }

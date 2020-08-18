@@ -76,21 +76,8 @@ class PageStatusLayout : FrameLayout {
         emptyView?.visibility = if (view == emptyView) View.VISIBLE else View.GONE
     }
 
-
-    fun setContentView(layoutId: Int): View? {
-        return setContentView(LayoutInflater.from(context).inflate(layoutId, this, false))
-    }
-
     fun setLoadingView(layoutId: Int): View? {
         return setLoadingView(LayoutInflater.from(context).inflate(layoutId, this, false))
-    }
-
-    fun setEmptyView(layoutId: Int): View? {
-        return setEmptyView(LayoutInflater.from(context).inflate(layoutId, this, false))
-    }
-
-    fun setRetryView(layoutId: Int): View? {
-        return setRetryView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setLoadingView(view: View?): View? {
@@ -104,6 +91,10 @@ class PageStatusLayout : FrameLayout {
         return this.loadingView
     }
 
+    fun setEmptyView(layoutId: Int): View? {
+        return setEmptyView(LayoutInflater.from(context).inflate(layoutId, this, false))
+    }
+
     fun setEmptyView(view: View?): View? {
         val emptyView = emptyView
         if (emptyView != null) {
@@ -115,6 +106,10 @@ class PageStatusLayout : FrameLayout {
         return this.emptyView
     }
 
+    fun setRetryView(layoutId: Int): View? {
+        return setRetryView(LayoutInflater.from(context).inflate(layoutId, this, false))
+    }
+
     fun setRetryView(view: View?): View? {
         val retryView = retryView
         if (retryView != null) {
@@ -124,6 +119,10 @@ class PageStatusLayout : FrameLayout {
         addView(view)
         this.retryView = view
         return this.retryView
+    }
+
+    fun setContentView(layoutId: Int): View? {
+        return setContentView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setContentView(view: View?): View? {

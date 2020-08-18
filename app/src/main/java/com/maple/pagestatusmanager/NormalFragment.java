@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.maple.pagestatusmanager.utils.OnPageStatusListener;
 import com.maple.pagestatusmanager.utils.PageStatusManager;
 
 
@@ -36,27 +35,27 @@ public class NormalFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        pageStatusManager = new PageStatusManager(this, new OnPageStatusListener() {
-            @Override
-            public void setRetryEvent(View retryView) {
-                NormalFragment.this.setRetryEvent(retryView);
-            }
-        });
-
+        pageStatusManager = new PageStatusManager(this)
+                .setPageCallBack(new PageStatusManager.PageCallBack() {
+                    @Override
+                    public void setRetryEvent(View retryView) {
+                        View view = retryView.findViewById(R.id.id_btn_retry);
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
+                                pageStatusManager.showLoading();
+                                loadData();
+                            }
+                        });
+                    }
+                });
         pageStatusManager.showLoading();
     }
 
 
     public void setRetryEvent(View retryView) {
-        View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
-                pageStatusManager.showLoading();
-                loadData();
-            }
-        });
+
     }
 
     private void loadData() {
