@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pageStatusManager = PageStatusManager.generate(this, new OnPageStatusListener() {
+        pageStatusManager = new PageStatusManager(this, new OnPageStatusListener() {
             @Override
             public void setRetryEvent(View retryView) {
                 MainActivity.this.setRetryEvent(retryView);

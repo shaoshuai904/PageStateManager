@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestatusmanager.utils.PageStatusManager;
 import com.maple.pagestatusmanager.utils.OnPageStatusListener;
+import com.maple.pagestatusmanager.utils.PageStatusManager;
 
 
 public class AnyViewTestActivity extends AppCompatActivity {
@@ -24,7 +24,7 @@ public class AnyViewTestActivity extends AppCompatActivity {
 
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-        pageStatusManager = PageStatusManager.generate(mTextView, new OnPageStatusListener() {
+        pageStatusManager = new PageStatusManager(mTextView, new OnPageStatusListener() {
             @Override
             public void setRetryEvent(View retryView) {
                 retryRefreshTextView(retryView);

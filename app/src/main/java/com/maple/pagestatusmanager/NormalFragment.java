@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.maple.pagestatusmanager.utils.PageStatusManager;
 import com.maple.pagestatusmanager.utils.OnPageStatusListener;
+import com.maple.pagestatusmanager.utils.PageStatusManager;
 
 
 /**
@@ -36,7 +36,7 @@ public class NormalFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        pageStatusManager = PageStatusManager.generate(this, new OnPageStatusListener() {
+        pageStatusManager = new PageStatusManager(this, new OnPageStatusListener() {
             @Override
             public void setRetryEvent(View retryView) {
                 NormalFragment.this.setRetryEvent(retryView);
