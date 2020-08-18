@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.LayoutRes
 
 /**
  * 状态布局
@@ -76,7 +77,7 @@ class PageStatusLayout : FrameLayout {
         emptyView?.visibility = if (view == emptyView) View.VISIBLE else View.GONE
     }
 
-    fun setLoadingView(layoutId: Int): View? {
+    fun setLoadingView(@LayoutRes layoutId: Int): View? {
         return setLoadingView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
@@ -91,7 +92,7 @@ class PageStatusLayout : FrameLayout {
         return this.loadingView
     }
 
-    fun setEmptyView(layoutId: Int): View? {
+    fun setEmptyView(@LayoutRes layoutId: Int): View? {
         return setEmptyView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
@@ -106,7 +107,7 @@ class PageStatusLayout : FrameLayout {
         return this.emptyView
     }
 
-    fun setRetryView(layoutId: Int): View? {
+    fun setRetryView(@LayoutRes layoutId: Int): View? {
         return setRetryView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
@@ -121,7 +122,7 @@ class PageStatusLayout : FrameLayout {
         return this.retryView
     }
 
-    fun setContentView(layoutId: Int): View? {
+    fun setContentView(@LayoutRes layoutId: Int): View? {
         return setContentView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 

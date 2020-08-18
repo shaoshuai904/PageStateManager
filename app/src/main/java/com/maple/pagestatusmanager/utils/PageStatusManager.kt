@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import kotlin.math.max
 
@@ -21,12 +22,15 @@ class PageStatusManager {
         const val NO_LAYOUT_ID = 0
 
         @JvmField
+        @LayoutRes
         var BASE_LOADING_LAYOUT_ID: Int = NO_LAYOUT_ID
 
         @JvmField
+        @LayoutRes
         var BASE_RETRY_LAYOUT_ID: Int = NO_LAYOUT_ID
 
         @JvmField
+        @LayoutRes
         var BASE_EMPTY_LAYOUT_ID: Int = NO_LAYOUT_ID
     }
 
@@ -77,18 +81,20 @@ class PageStatusManager {
         open fun setEmptyEvent(emptyView: View?) {}
     }
 
+    // 各状态图的显示、隐藏
+    fun dismissLoading() = showContent()
     fun showLoading() = mPageStatusLayout.showLoading()
     fun showRetry() = mPageStatusLayout.showRetry()
     fun showContent() = mPageStatusLayout.showContent()
     fun showEmpty() = mPageStatusLayout.showEmpty()
 
-    // 设置状态图
-    fun setLoadingView(layoutId: Int) = mPageStatusLayout.setLoadingView(layoutId)
-    fun setRetryView(layoutId: Int) = mPageStatusLayout.setRetryView(layoutId)
-    fun setEmptyView(layoutId: Int) = mPageStatusLayout.setEmptyView(layoutId)
-    fun setContentView(layoutId: Int) = mPageStatusLayout.setContentView(layoutId)
+    // 设置状态图 by layoutId
+    fun setLoadingView(@LayoutRes layoutId: Int) = mPageStatusLayout.setLoadingView(layoutId)
+    fun setRetryView(@LayoutRes layoutId: Int) = mPageStatusLayout.setRetryView(layoutId)
+    fun setEmptyView(@LayoutRes layoutId: Int) = mPageStatusLayout.setEmptyView(layoutId)
+    fun setContentView(@LayoutRes layoutId: Int) = mPageStatusLayout.setContentView(layoutId)
 
-    // 设置状态图
+    // 设置状态图 by view
     fun setLoadingView(view: View?) = mPageStatusLayout.setLoadingView(view)
     fun setRetryView(view: View?) = mPageStatusLayout.setRetryView(view)
     fun setEmptyView(view: View?) = mPageStatusLayout.setEmptyView(view)
