@@ -34,7 +34,6 @@ class PageStatusManager {
         var BASE_EMPTY_LAYOUT_ID: Int = NO_LAYOUT_ID
     }
 
-
     constructor(activity: Activity) {
         this.mContext = activity
         val contentParent = activity.findViewById(android.R.id.content) as ViewGroup

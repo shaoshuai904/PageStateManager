@@ -3,7 +3,6 @@ package com.maple.pagestatusmanager.utils
 import android.content.Context
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -20,10 +19,6 @@ class PageStatusLayout : FrameLayout {
     private var loadingView: View? = null // loading页
     private var retryView: View? = null // 重试页
     private var emptyView: View? = null // 空数据页
-
-    companion object {
-        private val TAG = PageStatusLayout::class.java.simpleName
-    }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -82,10 +77,6 @@ class PageStatusLayout : FrameLayout {
     }
 
     fun setLoadingView(view: View?): View? {
-        val loadingView = loadingView
-        if (loadingView != null) {
-            Log.w(TAG, "已设置的LoadingView将被取代")
-        }
         removeView(loadingView)
         addView(view)
         this.loadingView = view
@@ -97,10 +88,6 @@ class PageStatusLayout : FrameLayout {
     }
 
     fun setEmptyView(view: View?): View? {
-        val emptyView = emptyView
-        if (emptyView != null) {
-            Log.w(TAG, "you have already set a empty view and would be instead of this new one.")
-        }
         removeView(emptyView)
         addView(view)
         this.emptyView = view
@@ -112,10 +99,6 @@ class PageStatusLayout : FrameLayout {
     }
 
     fun setRetryView(view: View?): View? {
-        val retryView = retryView
-        if (retryView != null) {
-            Log.w(TAG, "you have already set a retry view and would be instead of this new one.")
-        }
         removeView(retryView)
         addView(view)
         this.retryView = view
@@ -127,10 +110,6 @@ class PageStatusLayout : FrameLayout {
     }
 
     fun setContentView(view: View?): View? {
-        val contentView = contentView
-        if (contentView != null) {
-            Log.w(TAG, "you have already set a retry view and would be instead of this new one.")
-        }
         removeView(contentView)
         addView(view)
         this.contentView = view
