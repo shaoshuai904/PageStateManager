@@ -35,21 +35,18 @@ public class NormalFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        pageStatusManager = new PageStatusManager(this)
-                .setPageCallBack(new PageStatusManager.PageCallBack() {
-                    @Override
-                    public void setRetryEvent(View retryView) {
-                        View view = retryView.findViewById(R.id.id_btn_retry);
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
-                                pageStatusManager.showLoading();
-                                loadData();
-                            }
-                        });
-                    }
-                });
+        pageStatusManager = new PageStatusManager(this);
+        View retryView = pageStatusManager.getRetryView();
+        View view1 = retryView.findViewById(R.id.id_btn_retry);
+        view1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
+                pageStatusManager.showLoading();
+                loadData();
+            }
+        });
+
         pageStatusManager.showLoading();
     }
 

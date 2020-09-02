@@ -23,20 +23,17 @@ public class AnyViewTestActivity extends AppCompatActivity {
 
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-        pageStatusManager = new PageStatusManager(mTextView)
-                .setPageCallBack(new PageStatusManager.PageCallBack() {
-                    @Override
-                    public void setRetryEvent(View retryView) {
-                        View view = retryView.findViewById(R.id.id_btn_retry);
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
-                                AnyViewTestActivity.this.refreshTextView();
-                            }
-                        });
-                    }
-                });
+        pageStatusManager = new PageStatusManager(mTextView);
+        View retryView = pageStatusManager.getRetryView();
+        View view = retryView.findViewById(R.id.id_btn_retry);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
+                AnyViewTestActivity.this.refreshTextView();
+            }
+        });
+
         refreshTextView();
     }
 

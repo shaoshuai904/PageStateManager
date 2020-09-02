@@ -22,7 +22,10 @@ class PageStatusLayout : FrameLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        isFocusable = true // 获取焦点
+        isClickable = true // 防止点击穿透
+    }
 
     fun getContentView() = contentView
     fun getLoadingView() = loadingView
@@ -66,53 +69,100 @@ class PageStatusLayout : FrameLayout {
     private fun showView(view: View?) {
         if (view == null)
             return
-        loadingView?.visibility = if (view == loadingView) View.VISIBLE else View.GONE
-        retryView?.visibility = if (view == retryView) View.VISIBLE else View.GONE
-        contentView?.visibility = if (view == contentView) View.VISIBLE else View.GONE
-        emptyView?.visibility = if (view == emptyView) View.VISIBLE else View.GONE
+        when (view) {
+            loadingView -> {
+                loadingView?.visibility = View.VISIBLE
+                // contentView?.visibility = View.GONE
+                emptyView?.visibility = View.GONE
+                retryView?.visibility = View.GONE
+                pageChangeAction?.onShowLoading(view)
+            }
+            contentView -> {
+                loadingView?.visibility = View.GONE
+                contentView?.visibility = View.VISIBLE
+                emptyView?.visibility = View.GONE
+                retryView?.visibility = View.GONE
+                pageChangeAction?.onShowContent(view)
+            }
+            emptyView -> {
+                loadingView?.visibility = View.GONE
+                contentView?.visibility = View.GONE
+                emptyView?.visibility = View.VISIBLE
+                retryView?.visibility = View.GONE
+                pageChangeAction?.onShowEmpty(view)
+            }
+            retryView -> {
+                loadingView?.visibility = View.GONE
+                contentView?.visibility = View.GONE
+                emptyView?.visibility = View.GONE
+                retryView?.visibility = View.VISIBLE
+                pageChangeAction?.onShowRetry(view)
+            }
+        }
+    }
+
+    private var pageChangeAction: PageChangeAction? = null
+    fun setPageStatusChangeAction(action: PageChangeAction) {
+        pageChangeAction = action
     }
 
     fun setLoadingView(@LayoutRes layoutId: Int): View? {
+        if (layoutId == 0)
+            return null
         return setLoadingView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setLoadingView(view: View?): View? {
-        removeView(loadingView)
-        addView(view)
-        this.loadingView = view
+        if (view != null) {
+            removeView(loadingView)
+            addView(view)
+            this.loadingView = view
+        }
         return this.loadingView
     }
 
     fun setEmptyView(@LayoutRes layoutId: Int): View? {
+        if (layoutId == 0)
+            return null
         return setEmptyView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setEmptyView(view: View?): View? {
-        removeView(emptyView)
-        addView(view)
-        this.emptyView = view
+        if (view != null) {
+            removeView(emptyView)
+            addView(view)
+            this.emptyView = view
+        }
         return this.emptyView
     }
 
     fun setRetryView(@LayoutRes layoutId: Int): View? {
+        if (layoutId == 0)
+            return null
         return setRetryView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setRetryView(view: View?): View? {
-        removeView(retryView)
-        addView(view)
-        this.retryView = view
+        if (view != null) {
+            removeView(retryView)
+            addView(view)
+            this.retryView = view
+        }
         return this.retryView
     }
 
     fun setContentView(@LayoutRes layoutId: Int): View? {
+        if (layoutId == 0)
+            return null
         return setContentView(LayoutInflater.from(context).inflate(layoutId, this, false))
     }
 
     fun setContentView(view: View?): View? {
-        removeView(contentView)
-        addView(view)
-        this.contentView = view
+        if (view != null) {
+            removeView(contentView)
+            addView(view)
+            this.contentView = view
+        }
         return this.contentView
     }
 
