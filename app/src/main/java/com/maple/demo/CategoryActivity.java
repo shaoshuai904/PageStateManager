@@ -1,4 +1,4 @@
-package com.maple.pagestatusmanager;
+package com.maple.demo;
 
 import android.content.Intent;
 import android.os.Bundle;

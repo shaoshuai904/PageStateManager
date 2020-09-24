@@ -1,4 +1,4 @@
-package com.maple.pagestatusmanager.utils
+package com.maple.pagestate
 
 import android.content.Context
 import android.os.Looper

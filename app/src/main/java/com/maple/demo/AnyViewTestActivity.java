@@ -1,37 +1,43 @@
-package com.maple.pagestatusmanager;
+package com.maple.demo;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestatusmanager.utils.PageStatusManager;
+import com.maple.pagestate.PageStatusManager;
 
 
-public class MainActivity extends AppCompatActivity {
+public class AnyViewTestActivity extends AppCompatActivity {
+
+    private TextView mTextView;
+
     PageStatusManager pageStatusManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_anyview_test);
 
-        pageStatusManager = new PageStatusManager(this);
+        mTextView = (TextView) findViewById(R.id.id_textview);
+
+        pageStatusManager = new PageStatusManager(mTextView);
         View retryView = pageStatusManager.getRetryView();
         View view = retryView.findViewById(R.id.id_btn_retry);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
-                loadData();
+                Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
+                AnyViewTestActivity.this.refreshTextView();
             }
         });
 
-        loadData();
+        refreshTextView();
     }
 
-    private void loadData() {
+    private void refreshTextView() {
         pageStatusManager.showLoading();
 
         new Thread() {
@@ -42,13 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                double v = Math.random();
-                if (v > 0.8) {
+                if (Math.random() > 0.6) {
                     pageStatusManager.showContent();
-                } else if (v > 0.4) {
-                    pageStatusManager.showRetry();
                 } else {
-                    pageStatusManager.showEmpty();
+                    pageStatusManager.showRetry();
                 }
             }
         }.start();

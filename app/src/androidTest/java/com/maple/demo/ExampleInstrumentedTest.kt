@@ -1,4 +1,4 @@
-package com.maple.pagestatusmanager
+package com.maple.demo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

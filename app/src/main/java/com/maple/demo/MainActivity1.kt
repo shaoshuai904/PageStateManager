@@ -1,4 +1,4 @@
-package com.maple.pagestatusmanager
+package com.maple.demo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

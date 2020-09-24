@@ -1,8 +1,8 @@
-package com.maple.pagestatusmanager;
+package com.maple.demo;
 
 import android.app.Application;
 
-import com.maple.pagestatusmanager.utils.PageStatusManager;
+import com.maple.pagestate.PageStatusManager;
 
 
 /**
