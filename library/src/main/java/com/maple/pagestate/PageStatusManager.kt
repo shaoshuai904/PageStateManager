@@ -11,7 +11,16 @@ import kotlin.math.max
 /**
  * 页面状态管理者
  *
- * @author : shaoshuai27
+ * 核心思想：
+ * 针对目标Activity、Fragment、View，新包裹一层ViewGroup {@link PageStatusLayout}，
+ * 目标View作为contentView，同时新增 loadingView、emptyView、retryView 等状态View.
+ * 提供对外方法，控制不同状态view的显示隐藏。
+ *
+ * 获取目标view(contentView)在父View中的显示位置。
+ * 将contentView的layoutParams给PageStatusLayout，
+ * 同时设置contentView充满父View。实现完整的替换包裹效果。
+ *
+ * @author : maple
  * @date ：2020/8/17
  */
 class PageStatusManager {
@@ -45,8 +54,14 @@ class PageStatusManager {
 
     constructor(fragment: Fragment) {
         this.mContext = fragment.requireContext()
-        val contentParent = fragment.view?.parent as ViewGroup
-        initView(contentParent)
+        val contentParent = fragment.view?.parent
+        if (contentParent != null) {
+            if (contentParent is ViewGroup) {
+                initView(contentParent)
+            }
+        } else {
+            throw IllegalStateException("请在Fragment.onCreateView之后初始化")
+        }
     }
 
     constructor(view: View) {
@@ -63,12 +78,13 @@ class PageStatusManager {
 
     private fun initView(contentParent: ViewGroup, index: Int = 0) {
         val oldContent = contentParent.getChildAt(index)
+        val layoutParams = oldContent.layoutParams // 保存当前layout设置
         contentParent.removeView(oldContent)
         mPageStatusLayout = PageStatusLayout(mContext).apply {
             setPageStatusChangeAction(mPageChangeAction)
             setContentView(oldContent)
         }
-        contentParent.addView(mPageStatusLayout, index, oldContent.layoutParams)
+        contentParent.addView(mPageStatusLayout, index, layoutParams)
 
         // 初始化默认配置页面
         setLoadingView(mBaseLoadingLayoutId)

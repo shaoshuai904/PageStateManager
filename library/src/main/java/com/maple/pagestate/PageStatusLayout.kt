@@ -11,7 +11,7 @@ import androidx.annotation.LayoutRes
 /**
  * 状态布局
  *
- * @author : shaoshuai27
+ * @author : maple
  * @date ：2020/8/17
  */
 class PageStatusLayout : FrameLayout {
@@ -160,7 +160,8 @@ class PageStatusLayout : FrameLayout {
     fun setContentView(view: View?): View? {
         if (view != null) {
             removeView(contentView)
-            addView(view)
+            // contentView 把自己的 layoutParams 给了 PageStatusLayout，此时设置contentView充满父View
+            addView(view, -1, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             this.contentView = view
         }
         return this.contentView
