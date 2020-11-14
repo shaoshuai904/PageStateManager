@@ -10,11 +10,12 @@ import androidx.annotation.Nullable;
 import com.maple.pagestate.PageChangeAction;
 import com.maple.pagestate.PageConfig;
 
+
 /**
- * 页面配置
+ * 自定义页面配置
  *
  * @author : shaoshuai
- * @date ：2020/11/13
+ * @date ：2020/08/17
  */
 public class MyPageConfig implements PageConfig {
     @LayoutRes int loadingLayoutId;

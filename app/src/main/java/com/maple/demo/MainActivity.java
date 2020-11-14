@@ -1,62 +1,33 @@
 package com.maple.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestate.PageStatusManager;
-
-
+/**
+ * @author : shaoshuai
+ * @date ：2020/08/17
+ */
 public class MainActivity extends AppCompatActivity {
-    PageStatusManager pageStatusManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
-        pageStatusManager = new PageStatusManager(this);
-        pageStatusManager.getEmptyView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-            }
+        findViewById(R.id.bt_in_activity).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ActivityTestActivity.class);
+            startActivity(intent);
         });
-        pageStatusManager.getRetryView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
-                loadData();
-            }
+        findViewById(R.id.bt_in_fragment).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FragmentTestActivity.class);
+            startActivity(intent);
         });
-
-        loadData();
-    }
-
-    private void loadData() {
-        pageStatusManager.showLoading();
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                double v = Math.random();
-                if (v > 0.8) {
-                    pageStatusManager.showContent();
-                } else if (v > 0.4) {
-                    pageStatusManager.showRetry();
-                } else {
-                    pageStatusManager.showEmpty();
-                }
-            }
-        }.start();
+        findViewById(R.id.bt_in_any_view).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AnyViewTestActivity.class);
+            startActivity(intent);
+        });
     }
 
 }

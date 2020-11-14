@@ -1,40 +1,30 @@
 package com.maple.demo;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.maple.pagestate.PageStatusManager;
-
 
 /**
  *
  * @author : shaoshuai
  * @date ：2020/08/17
  */
-public class NormalFragment extends Fragment {
+public class ActivityTestActivity extends AppCompatActivity {
     PageStatusManager pageStatusManager;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_context, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_context);
 
         // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
         pageStatusManager = new PageStatusManager(this);
         pageStatusManager.getEmptyView().setOnClickListener(v -> loadData());
         pageStatusManager.getRetryView().setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
             loadData();
         });
 
@@ -43,6 +33,7 @@ public class NormalFragment extends Fragment {
 
     private void loadData() {
         pageStatusManager.showLoading();
+
         new Thread() {
             @Override
             public void run() {
@@ -51,14 +42,16 @@ public class NormalFragment extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (Math.random() > 0.6) {
+                double v = Math.random();
+                if (v > 0.8) {
                     pageStatusManager.showContent();
-                } else {
+                } else if (v > 0.4) {
                     pageStatusManager.showRetry();
+                } else {
+                    pageStatusManager.showEmpty();
                 }
             }
         }.start();
     }
+
 }
-
-
