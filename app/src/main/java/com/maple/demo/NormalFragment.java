@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.maple.pagestate.PageConfig;
 import com.maple.pagestate.PageStatusManager;
 
 
@@ -34,8 +35,8 @@ public class NormalFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        pageStatusManager = new PageStatusManager(this);
+        PageConfig config = new PageConfig(R.layout.base_loading, R.layout.base_empty, R.layout.base_retry);
+        pageStatusManager = new PageStatusManager(this, config);
         View retryView = pageStatusManager.getRetryView();
         View view1 = retryView.findViewById(R.id.id_btn_retry);
         view1.setOnClickListener(new View.OnClickListener() {
