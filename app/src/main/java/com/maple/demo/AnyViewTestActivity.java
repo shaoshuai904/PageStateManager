@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.maple.demo.config.MyPageConfig;
-import com.maple.pagestate.PageStatusManager;
+import com.maple.pagestate.PageStateManager;
 
 /**
  *
@@ -16,7 +16,7 @@ import com.maple.pagestate.PageStatusManager;
  */
 public class AnyViewTestActivity extends AppCompatActivity {
     private TextView mTextView;
-    PageStatusManager pageStatusManager;
+    PageStateManager pageStateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +24,9 @@ public class AnyViewTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anyview_test);
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-         pageStatusManager = new PageStatusManager(mTextView, new MyPageConfig());
-        pageStatusManager.getEmptyView().setOnClickListener(v -> refreshTextView());
-        pageStatusManager.getRetryView().setOnClickListener(v -> {
+         pageStateManager = new PageStateManager(mTextView, new MyPageConfig());
+        pageStateManager.getEmptyView().setOnClickListener(v -> refreshTextView());
+        pageStateManager.getRetryView().setOnClickListener(v -> {
             Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
             refreshTextView();
         });
@@ -35,7 +35,7 @@ public class AnyViewTestActivity extends AppCompatActivity {
     }
 
     private void refreshTextView() {
-        pageStatusManager.showLoading();
+        pageStateManager.showLoading();
 
         new Thread() {
             @Override
@@ -46,9 +46,9 @@ public class AnyViewTestActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (Math.random() > 0.6) {
-                    pageStatusManager.showContent();
+                    pageStateManager.showContent();
                 } else {
-                    pageStatusManager.showRetry();
+                    pageStateManager.showRetry();
                 }
             }
         }.start();

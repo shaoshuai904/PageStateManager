@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.maple.demo.config.PigConfig;
-import com.maple.pagestate.PageStatusManager;
+import com.maple.pagestate.PageStateManager;
 
 
 /**
@@ -18,7 +18,7 @@ import com.maple.pagestate.PageStatusManager;
  * @date ：2020/08/17
  */
 public class NormalFragment extends Fragment {
-    PageStatusManager pageStatusManager;
+    PageStateManager pageStateManager;
 
     @Nullable
     @Override
@@ -30,12 +30,12 @@ public class NormalFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        pageStatusManager = new PageStatusManager(this, new PigConfig());
-        View emptyView = pageStatusManager.getEmptyView();
+        pageStateManager = new PageStateManager(this, new PigConfig());
+        View emptyView = pageStateManager.getEmptyView();
         if (emptyView != null) {
             emptyView.setOnClickListener(v -> loadData());
         }
-        View retryView = pageStatusManager.getRetryView();
+        View retryView = pageStateManager.getRetryView();
         if (retryView != null) {
             retryView.setOnClickListener(v -> {
                 Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
@@ -47,7 +47,7 @@ public class NormalFragment extends Fragment {
     }
 
     private void loadData() {
-        pageStatusManager.showLoading();
+        pageStateManager.showLoading();
         new Thread() {
             @Override
             public void run() {
@@ -57,9 +57,9 @@ public class NormalFragment extends Fragment {
                     e.printStackTrace();
                 }
                 if (Math.random() > 0.6) {
-                    pageStatusManager.showContent();
+                    pageStateManager.showContent();
                 } else {
-                    pageStatusManager.showEmpty();
+                    pageStateManager.showEmpty();
                 }
             }
         }.start();

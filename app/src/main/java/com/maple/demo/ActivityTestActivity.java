@@ -6,14 +6,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestate.PageStatusManager;
+import com.maple.pagestate.PageStateManager;
 
 /**
  * @author : shaoshuai
  * @date ：2020/08/17
  */
 public class ActivityTestActivity extends AppCompatActivity {
-    PageStatusManager pageStatusManager;
+    PageStateManager pageStateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +22,12 @@ public class ActivityTestActivity extends AppCompatActivity {
 
         // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
         // 不传Config，将使用默认的
-        pageStatusManager = new PageStatusManager(this);
-        View emptyView = pageStatusManager.getEmptyView();
+        pageStateManager = new PageStateManager(this);
+        View emptyView = pageStateManager.getEmptyView();
         if (emptyView != null) {
             emptyView.setOnClickListener(v -> loadData());
         }
-        View retryView = pageStatusManager.getRetryView();
+        View retryView = pageStateManager.getRetryView();
         if (retryView != null) {
             retryView.setOnClickListener(v -> {
                 Toast.makeText(ActivityTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
@@ -39,7 +39,7 @@ public class ActivityTestActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        pageStatusManager.showLoading();
+        pageStateManager.showLoading();
         new Thread() {
             @Override
             public void run() {
@@ -50,11 +50,11 @@ public class ActivityTestActivity extends AppCompatActivity {
                 }
                 double v = Math.random();
                 if (v > 0.6) {
-                    pageStatusManager.showContent();
+                    pageStateManager.showContent();
                 } else if (v > 0.3) {
-                    pageStatusManager.showRetry();
+                    pageStateManager.showRetry();
                 } else {
-                    pageStatusManager.showEmpty();
+                    pageStateManager.showEmpty();
                 }
             }
         }.start();

@@ -18,23 +18,23 @@ import androidx.annotation.Nullable;
  * @author : shaoshuai
  * @date ：2020/8/17
  */
-public class PageStatusLayout extends FrameLayout {
+public class PageStateLayout extends FrameLayout {
     private View contentView = null; // 内容页
     private View loadingView = null;// loading页
     private View retryView = null;// 重试页
     private View emptyView = null;// 空数据页o
 
-    public PageStatusLayout(@NonNull Context context) {
+    public PageStateLayout(@NonNull Context context) {
         super(context);
         init();
     }
 
-    public PageStatusLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public PageStateLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PageStatusLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public PageStateLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

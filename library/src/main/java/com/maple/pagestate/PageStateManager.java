@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
  * 页面状态管理者
  * <p>
  * 核心思想：
- * 针对目标Activity、Fragment、View，新包裹一层ViewGroup {@link PageStatusLayout}，
+ * 针对目标Activity、Fragment、View，新包裹一层ViewGroup {@link PageStateLayout}，
  * 目标View作为contentView，同时新增 loadingView、emptyView、retryView 等状态View.
  * 提供对外方法，控制不同状态view的显示隐藏。
  * <p>
@@ -26,27 +26,27 @@ import androidx.fragment.app.Fragment;
  * @author : shaoshuai
  * @date ：2020/8/17
  */
-public class PageStatusManager {
-    private PageStatusLayout mPageStatusLayout;
+public class PageStateManager {
+    private PageStateLayout mPageStateLayout;
     private Context mContext;
     private PageConfig mConfig;
 
-    public PageStatusManager(Activity activity) {
+    public PageStateManager(Activity activity) {
         this(activity, new PageConfig.Default());
     }
 
-    public PageStatusManager(Activity activity, PageConfig pageConfig) {
+    public PageStateManager(Activity activity, PageConfig pageConfig) {
         this.mContext = activity;
         this.mConfig = pageConfig;
         ViewGroup contentParent = activity.findViewById(android.R.id.content);
         initView(contentParent);
     }
 
-    public PageStatusManager(Fragment fragment) {
+    public PageStateManager(Fragment fragment) {
         this(fragment, new PageConfig.Default());
     }
 
-    public PageStatusManager(Fragment fragment, PageConfig pageConfig) {
+    public PageStateManager(Fragment fragment, PageConfig pageConfig) {
         this.mContext = fragment.requireContext();
         this.mConfig = pageConfig;
         ViewParent contentParent = null;
@@ -63,11 +63,11 @@ public class PageStatusManager {
         }
     }
 
-    public PageStatusManager(View view) {
+    public PageStateManager(View view) {
         this(view, new PageConfig.Default());
     }
 
-    public PageStatusManager(View view, PageConfig pageConfig) {
+    public PageStateManager(View view, PageConfig pageConfig) {
         this.mContext = view.getContext();
         this.mConfig = pageConfig;
         ViewParent contentParent = view.getParent();
@@ -87,11 +87,11 @@ public class PageStatusManager {
         View oldContent = contentParent.getChildAt(index);
         ViewGroup.LayoutParams layoutParams = oldContent.getLayoutParams(); // 保存当前layout设置
         contentParent.removeView(oldContent);
-        mPageStatusLayout = new PageStatusLayout(mContext);
-        mPageStatusLayout.setPageStatusChangeAction(mConfig.getPageChangeAction());
-        mPageStatusLayout.setContentView(oldContent);
+        mPageStateLayout = new PageStateLayout(mContext);
+        mPageStateLayout.setPageStatusChangeAction(mConfig.getPageChangeAction());
+        mPageStateLayout.setContentView(oldContent);
 
-        contentParent.addView(mPageStatusLayout, index, layoutParams);
+        contentParent.addView(mPageStateLayout, index, layoutParams);
 
         // 初始化默认配置页面
 //        setLoadingView(mConfig.loadingLayoutId());
@@ -104,10 +104,10 @@ public class PageStatusManager {
 
     // 各状态图的显示、隐藏
     public void showRetry() {
-        mPageStatusLayout.showRetry();
+        mPageStateLayout.showRetry();
     }
     public void showContent() {
-        mPageStatusLayout.showContent();
+        mPageStateLayout.showContent();
     }
 
     public void dismissLoading() {
@@ -118,9 +118,9 @@ public class PageStatusManager {
     }
     public void showLoadingView(boolean isShow) {
         if (isShow) {
-            mPageStatusLayout.showLoading();
+            mPageStateLayout.showLoading();
         } else {
-            mPageStatusLayout.showContent();
+            mPageStateLayout.showContent();
         }
     }
 
@@ -129,52 +129,52 @@ public class PageStatusManager {
     }
     public void showEmptyView(Boolean isShow) {
         if (isShow) {
-            mPageStatusLayout.showEmpty();
+            mPageStateLayout.showEmpty();
         } else {
-            mPageStatusLayout.showContent();
+            mPageStateLayout.showContent();
         }
     }
 
     // 设置状态图 by layoutId
     public void setLoadingView(@LayoutRes int layoutId) {
-        mPageStatusLayout.setLoadingView(layoutId);
+        mPageStateLayout.setLoadingView(layoutId);
     }
     public void setRetryView(@LayoutRes int layoutId) {
-        mPageStatusLayout.setRetryView(layoutId);
+        mPageStateLayout.setRetryView(layoutId);
     }
     public void setEmptyView(@LayoutRes int layoutId) {
-        mPageStatusLayout.setEmptyView(layoutId);
+        mPageStateLayout.setEmptyView(layoutId);
     }
     public void setContentView(@LayoutRes int layoutId) {
-        mPageStatusLayout.setContentView(layoutId);
+        mPageStateLayout.setContentView(layoutId);
     }
 
     // 设置状态图 by view
     public void setLoadingView(@Nullable View view) {
-        mPageStatusLayout.setLoadingView(view);
+        mPageStateLayout.setLoadingView(view);
     }
     public void setRetryView(@Nullable View view) {
-        mPageStatusLayout.setRetryView(view);
+        mPageStateLayout.setRetryView(view);
     }
     public void setEmptyView(@Nullable View view) {
-        mPageStatusLayout.setEmptyView(view);
+        mPageStateLayout.setEmptyView(view);
     }
     public void setContentView(@Nullable View view) {
-        mPageStatusLayout.setContentView(view);
+        mPageStateLayout.setContentView(view);
     }
 
     // 获取状态图
     @Nullable public View getLoadingView() {
-        return mPageStatusLayout.getLoadingView();
+        return mPageStateLayout.getLoadingView();
     }
     @Nullable public View getRetryView() {
-        return mPageStatusLayout.getRetryView();
+        return mPageStateLayout.getRetryView();
     }
     @Nullable public View getEmptyView() {
-        return mPageStatusLayout.getEmptyView();
+        return mPageStateLayout.getEmptyView();
     }
     @Nullable public View getContentView() {
-        return mPageStatusLayout.getContentView();
+        return mPageStateLayout.getContentView();
     }
 
 }
