@@ -5,7 +5,7 @@
 
 PageStateManager 可以作用于 `Activity` 、`Fragment`、任意 `View` 对象，
 作用对象将作为 `contentView`，通过PageConfig配置类，设置 `LoadingView`、`EmptyView`、`RetryView` 等状态视图。
-提供对外方法，控制不同状态view的显示隐藏
+提供对外方法，控制不同状态view的显示隐藏。
 
 避免对目标对象xml文件的更改，实现一次配置，到处使用。
 
@@ -34,49 +34,50 @@ dependencies {
 ###  自定义PageConfig
 
 ```java                
-        public class PigConfig implements PageConfig {
+public class PigConfig implements PageConfig {
 
-            public PigConfig() {
-            }
+    public PigConfig() {
+    }
 
-            @Nullable
+    @Nullable
+    @Override
+    public View loadingView(Context context) {
+        return LayoutInflater.from(context).inflate(R.layout.custom_loading_pig, null, false);
+    }
+
+    @Nullable
+    @Override
+    public View emptyView(Context context) {
+        return LayoutInflater.from(context).inflate(R.layout.custom_empty_2, null, false);
+    }
+
+    @Nullable
+    @Override
+    public View retryView(Context context) {
+        // 不想设置的类型，可直接设置为null
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public PageChangeAction getPageChangeAction() {
+        return new PageChangeAction() {
             @Override
-            public View loadingView(Context context) {
-                return LayoutInflater.from(context).inflate(R.layout.custom_loading_pig, null, false);
-            }
-
-            @Nullable
-            @Override
-            public View emptyView(Context context) {
-                return LayoutInflater.from(context).inflate(R.layout.custom_empty_2, null, false);
-            }
-
-            @Nullable
-            @Override
-            public View retryView(Context context) {
-                // 不想设置的类型，可直接设置为null
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public PageChangeAction getPageChangeAction() {
-                return new PageChangeAction() {
-                    @Override
-                    public void onShowLoading(View loadingView) {
-                        super.onShowLoading(loadingView);
-                        ImageView ivLoading = loadingView.findViewById(R.id.iv_loading);
-                        Drawable bg = ivLoading.getBackground();
-                        if (bg instanceof AnimationDrawable) {
-                            AnimationDrawable ad = (AnimationDrawable) bg;
-                            if (!ad.isRunning()) {
-                                ad.start();
-                            }
-                        }
+            public void onShowLoading(View loadingView) {
+                super.onShowLoading(loadingView);
+                ImageView ivLoading = loadingView.findViewById(R.id.iv_loading);
+                Drawable bg = ivLoading.getBackground();
+                if (bg instanceof AnimationDrawable) {
+                    AnimationDrawable ad = (AnimationDrawable) bg;
+                    if (!ad.isRunning()) {
+                        ad.start();
                     }
-                };
+                }
             }
-        }
+        };
+    }
+}
+
 ```
 
 [完整预览各类用法 -（简单使用类 传送门）](https://github.com/shaoshuai904/PageStatusManager/blob/master/app/src/main/java/com/maple/demo/config/MyPageConfig.java)
