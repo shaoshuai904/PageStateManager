@@ -1,7 +1,7 @@
 # PageStateManager - 页面状态管理者
 
 [![API](https://img.shields.io/badge/API-19%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=19)
-[![jitpack](https://jitpack.io/v/shaoshuai904/PageStatusManager.svg)](https://jitpack.io/#shaoshuai904/PageStatusManager)
+[![jitpack](https://jitpack.io/v/shaoshuai904/PageStatusManager.svg)](https://jitpack.io/#shaoshuai904/PageStateManager)
 
 PageStateManager 可以作用于 `Activity` 、`Fragment`、任意 `View` 对象，
 作用对象将作为 `contentView`，通过PageConfig配置类，设置 `LoadingView`、`EmptyView`、`RetryView` 等状态视图。
@@ -26,7 +26,7 @@ allprojects {
 
 ```groovy
 dependencies {
-	implementation 'com.github.shaoshuai904:PageStatusManager:1.0.0'
+	implementation 'com.github.shaoshuai904:PageStateManager:1.0.0'
 }
 ```
 
@@ -80,6 +80,6 @@ public class PigConfig implements PageConfig {
 
 ```
 
-[完整预览各类用法 -（简单使用类 传送门）](https://github.com/shaoshuai904/PageStatusManager/blob/master/app/src/main/java/com/maple/demo/config/MyPageConfig.java)
+[完整预览各类用法 -（简单使用类 传送门）](https://github.com/shaoshuai904/PageStateManager/blob/master/app/src/main/java/com/maple/demo/config/MyPageConfig.java)
 
 
