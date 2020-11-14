@@ -149,16 +149,16 @@ public class PageStatusManager {
     }
 
     // 设置状态图 by view
-    public void setLoadingView(View view) {
+    public void setLoadingView(@Nullable View view) {
         mPageStatusLayout.setLoadingView(view);
     }
-    public void setRetryView(View view) {
+    public void setRetryView(@Nullable View view) {
         mPageStatusLayout.setRetryView(view);
     }
-    public void setEmptyView(View view) {
+    public void setEmptyView(@Nullable View view) {
         mPageStatusLayout.setEmptyView(view);
     }
-    public void setContentView(View view) {
+    public void setContentView(@Nullable View view) {
         mPageStatusLayout.setContentView(view);
     }
 

@@ -44,19 +44,19 @@ public class PageStatusLayout extends FrameLayout {
         setClickable(true);  // 防止点击穿透
     }
 
-
+    @Nullable
     View getContentView() {
         return contentView;
     }
-
+    @Nullable
     View getLoadingView() {
         return loadingView;
     }
-
+    @Nullable
     View getRetryView() {
         return retryView;
     }
-
+    @Nullable
     View getEmptyView() {
         return emptyView;
     }
@@ -114,11 +114,10 @@ public class PageStatusLayout extends FrameLayout {
                     showView(emptyView);
                 }
             });
-
         }
     }
 
-    private void showView(View view) {
+    private void showView(@Nullable View view) {
         if (view == null)
             return;
         if (view == loadingView) {
@@ -151,17 +150,19 @@ public class PageStatusLayout extends FrameLayout {
 
     private PageChangeAction pageChangeAction = null;
 
-    void setPageStatusChangeAction(PageChangeAction action) {
+    void setPageStatusChangeAction(@Nullable PageChangeAction action) {
         pageChangeAction = action;
     }
 
+    @Nullable
     public View setLoadingView(@LayoutRes int layoutId) {
         if (layoutId == 0)
             return null;
         return setLoadingView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
     }
 
-    public View setLoadingView(View view) {
+    @Nullable
+    public View setLoadingView(@Nullable View view) {
         if (view != null) {
             removeView(loadingView);
             addView(view);
@@ -170,13 +171,15 @@ public class PageStatusLayout extends FrameLayout {
         return this.loadingView;
     }
 
+    @Nullable
     public View setEmptyView(@LayoutRes int layoutId) {
         if (layoutId == 0)
             return null;
         return setEmptyView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
     }
 
-    public View setEmptyView(View view) {
+    @Nullable
+    public View setEmptyView(@Nullable View view) {
         if (view != null) {
             removeView(emptyView);
             addView(view);
@@ -185,13 +188,15 @@ public class PageStatusLayout extends FrameLayout {
         return this.emptyView;
     }
 
+    @Nullable
     public View setRetryView(@LayoutRes int layoutId) {
         if (layoutId == 0)
             return null;
         return setRetryView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
     }
 
-    public View setRetryView(View view) {
+    @Nullable
+    public View setRetryView(@Nullable View view) {
         if (view != null) {
             removeView(retryView);
             addView(view);
@@ -200,13 +205,15 @@ public class PageStatusLayout extends FrameLayout {
         return this.retryView;
     }
 
+    @Nullable
     public View setContentView(@LayoutRes int layoutId) {
         if (layoutId == 0)
             return null;
         return setContentView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
     }
 
-    public View setContentView(View view) {
+    @Nullable
+    public View setContentView(@Nullable View view) {
         if (view != null) {
             removeView(contentView);
             // contentView 把自己的 layoutParams 给了 PageStatusLayout，此时设置contentView充满父View
