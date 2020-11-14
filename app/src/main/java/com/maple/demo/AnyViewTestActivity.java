@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.maple.demo.config.MyPageConfig;
 import com.maple.pagestate.PageStatusManager;
 
 /**

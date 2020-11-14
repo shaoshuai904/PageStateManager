@@ -72,9 +72,7 @@ public interface PageConfig {
         @Nullable
         @Override
         public PageChangeAction getPageChangeAction() {
-            return new PageChangeAction() {
-
-            };
+            return null;
         }
     }
 }

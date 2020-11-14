@@ -9,11 +9,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.maple.demo.config.PigConfig;
 import com.maple.pagestate.PageStatusManager;
 
 
 /**
- *
  * @author : shaoshuai
  * @date ：2020/08/17
  */
@@ -30,13 +30,18 @@ public class NormalFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
-        pageStatusManager = new PageStatusManager(this);
-        pageStatusManager.getEmptyView().setOnClickListener(v -> loadData());
-        pageStatusManager.getRetryView().setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
-            loadData();
-        });
+        pageStatusManager = new PageStatusManager(this, new PigConfig());
+        View emptyView = pageStatusManager.getEmptyView();
+        if (emptyView != null) {
+            emptyView.setOnClickListener(v -> loadData());
+        }
+        View retryView = pageStatusManager.getRetryView();
+        if (retryView != null) {
+            retryView.setOnClickListener(v -> {
+                Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
+                loadData();
+            });
+        }
 
         loadData();
     }
@@ -54,7 +59,7 @@ public class NormalFragment extends Fragment {
                 if (Math.random() > 0.6) {
                     pageStatusManager.showContent();
                 } else {
-                    pageStatusManager.showRetry();
+                    pageStatusManager.showEmpty();
                 }
             }
         }.start();
