@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.maple.pagestate.PageConfig;
 import com.maple.pagestate.PageStatusManager;
 
 
@@ -18,11 +17,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PageConfig config = new PageConfig(R.layout.base_loading, R.layout.base_empty, R.layout.base_retry);
-        pageStatusManager = new PageStatusManager(this, config);
-        View retryView = pageStatusManager.getRetryView();
-        View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener() {
+        // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
+        pageStatusManager = new PageStatusManager(this);
+        pageStatusManager.getEmptyView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        pageStatusManager.getRetryView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();

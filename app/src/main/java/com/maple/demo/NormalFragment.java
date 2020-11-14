@@ -9,21 +9,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.maple.pagestate.PageConfig;
 import com.maple.pagestate.PageStatusManager;
 
 
 /**
- * Created by zhy on 15/8/27.
+ * @author : shaoshuai
+ * @date ：2020/11/14
  */
 public class NormalFragment extends Fragment {
     PageStatusManager pageStatusManager;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loadData();
-    }
 
     @Nullable
     @Override
@@ -35,28 +29,27 @@ public class NormalFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        PageConfig config = new PageConfig(R.layout.base_loading, R.layout.base_empty, R.layout.base_retry);
-        pageStatusManager = new PageStatusManager(this, config);
-        View retryView = pageStatusManager.getRetryView();
-        View view1 = retryView.findViewById(R.id.id_btn_retry);
-        view1.setOnClickListener(new View.OnClickListener() {
+        // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
+        pageStatusManager = new PageStatusManager(this);
+        pageStatusManager.getEmptyView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        pageStatusManager.getRetryView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "retry event invoked", Toast.LENGTH_SHORT).show();
-                pageStatusManager.showLoading();
                 loadData();
             }
         });
 
-        pageStatusManager.showLoading();
-    }
-
-
-    public void setRetryEvent(View retryView) {
-
+        loadData();
     }
 
     private void loadData() {
+        pageStatusManager.showLoading();
         new Thread() {
             @Override
             public void run() {

@@ -10,7 +10,6 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 页面状态管理者
@@ -32,9 +31,9 @@ public class PageStatusManager {
     private Context mContext;
     private PageConfig mConfig;
 
-//    public PageStatusManager(Activity activity) {
-//        this(activity, new PageConfig());
-//    }
+    public PageStatusManager(Activity activity) {
+        this(activity, new PageConfig.Default());
+    }
 
     public PageStatusManager(Activity activity, PageConfig pageConfig) {
         this.mContext = activity;
@@ -43,9 +42,9 @@ public class PageStatusManager {
         initView(contentParent);
     }
 
-//    public PageStatusManager(Fragment fragment) {
-//        this(fragment, new PageConfig());
-//    }
+    public PageStatusManager(Fragment fragment) {
+        this(fragment, new PageConfig.Default());
+    }
 
     public PageStatusManager(Fragment fragment, PageConfig pageConfig) {
         this.mContext = fragment.requireContext();
@@ -64,9 +63,9 @@ public class PageStatusManager {
         }
     }
 
-//    public PageStatusManager(View view) {
-//        this(view, new PageConfig());
-//    }
+    public PageStatusManager(View view) {
+        this(view, new PageConfig.Default());
+    }
 
     public PageStatusManager(View view, PageConfig pageConfig) {
         this.mContext = view.getContext();
@@ -84,21 +83,23 @@ public class PageStatusManager {
     private void initView(ViewGroup contentParent) {
         initView(contentParent, 0);
     }
-
     private void initView(ViewGroup contentParent, int index) {
         View oldContent = contentParent.getChildAt(index);
         ViewGroup.LayoutParams layoutParams = oldContent.getLayoutParams(); // 保存当前layout设置
         contentParent.removeView(oldContent);
         mPageStatusLayout = new PageStatusLayout(mContext);
-        mPageStatusLayout.setPageStatusChangeAction(mConfig.mPageChangeAction);
+        mPageStatusLayout.setPageStatusChangeAction(mConfig.getPageChangeAction());
         mPageStatusLayout.setContentView(oldContent);
 
         contentParent.addView(mPageStatusLayout, index, layoutParams);
 
         // 初始化默认配置页面
-        setLoadingView(mConfig.mBaseLoadingLayoutId);
-        setRetryView(mConfig.mBaseRetryLayoutId);
-        setEmptyView(mConfig.mBaseEmptyLayoutId);
+//        setLoadingView(mConfig.loadingLayoutId());
+//        setEmptyView(mConfig.emptyLayoutId());
+//        setRetryView(mConfig.retryLayoutId());
+        setLoadingView(mConfig.loadingView(mContext));
+        setEmptyView(mConfig.emptyView(mContext));
+        setRetryView(mConfig.retryView(mContext));
     }
 
     // 各状态图的显示、隐藏
@@ -126,7 +127,7 @@ public class PageStatusManager {
     public void showEmpty() {
         showEmptyView(true);
     }
-    public void showEmptyView(@NotNull Boolean isShow) {
+    public void showEmptyView(Boolean isShow) {
         if (isShow) {
             mPageStatusLayout.showEmpty();
         } else {
@@ -163,20 +164,16 @@ public class PageStatusManager {
     }
 
     // 获取状态图
-    @Nullable
-    public View getLoadingView() {
+    @Nullable public View getLoadingView() {
         return mPageStatusLayout.getLoadingView();
     }
-    @Nullable
-    public View getRetryView() {
+    @Nullable public View getRetryView() {
         return mPageStatusLayout.getRetryView();
     }
-    @Nullable
-    public View getEmptyView() {
+    @Nullable public View getEmptyView() {
         return mPageStatusLayout.getEmptyView();
     }
-    @Nullable
-    public View getContentView() {
+    @Nullable public View getContentView() {
         return mPageStatusLayout.getContentView();
     }
 

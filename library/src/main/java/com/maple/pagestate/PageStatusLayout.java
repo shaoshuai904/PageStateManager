@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 /**
  * 状态布局
  *
- * @author : maple
+ * @author : shaoshuai
  * @date ：2020/8/17
  */
 public class PageStatusLayout extends FrameLayout {
@@ -44,20 +44,16 @@ public class PageStatusLayout extends FrameLayout {
         setClickable(true);  // 防止点击穿透
     }
 
-    @Nullable
-    View getContentView() {
+    @Nullable View getContentView() {
         return contentView;
     }
-    @Nullable
-    View getLoadingView() {
+    @Nullable View getLoadingView() {
         return loadingView;
     }
-    @Nullable
-    View getRetryView() {
+    @Nullable View getRetryView() {
         return retryView;
     }
-    @Nullable
-    View getEmptyView() {
+    @Nullable View getEmptyView() {
         return emptyView;
     }
 
