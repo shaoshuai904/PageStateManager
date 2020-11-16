@@ -61,7 +61,7 @@ public class PageStateLayout extends FrameLayout {
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
-    void showLoading() {
+    public void showLoading() {
         if (isMainThread()) {
             showView(loadingView);
         } else {
@@ -74,7 +74,7 @@ public class PageStateLayout extends FrameLayout {
         }
     }
 
-    void showRetry() {
+    public void showRetry() {
         if (isMainThread()) {
             showView(retryView);
         } else {
@@ -87,7 +87,7 @@ public class PageStateLayout extends FrameLayout {
         }
     }
 
-    void showContent() {
+    public void showContent() {
         if (isMainThread()) {
             showView(contentView);
         } else {
@@ -100,7 +100,7 @@ public class PageStateLayout extends FrameLayout {
         }
     }
 
-    void showEmpty() {
+    public void showEmpty() {
         if (isMainThread()) {
             showView(emptyView);
         } else {
@@ -145,77 +145,72 @@ public class PageStateLayout extends FrameLayout {
     }
 
     private PageChangeAction pageChangeAction = null;
-
-    void setPageStatusChangeAction(@Nullable PageChangeAction action) {
+    // 设置页面变化监听
+    public void setPageStatusChangeAction(@Nullable PageChangeAction action) {
         pageChangeAction = action;
     }
 
     @Nullable
+    private View getViewByLayoutId(@LayoutRes int layoutId) {
+        View view = null;
+        if (layoutId != 0) {
+            view = LayoutInflater.from(getContext()).inflate(layoutId, this, false);
+        }
+        return view;
+    }
+
+    @Nullable
     public View setLoadingView(@LayoutRes int layoutId) {
-        if (layoutId == 0)
-            return null;
-        return setLoadingView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
+        return setLoadingView(getViewByLayoutId(layoutId));
     }
 
     @Nullable
     public View setLoadingView(@Nullable View view) {
-        if (view != null) {
-            removeView(loadingView);
-            addView(view);
-            this.loadingView = view;
-        }
+        if (loadingView != null) removeView(loadingView);
+        if (view != null) addView(view);
+        this.loadingView = view;
         return this.loadingView;
     }
 
     @Nullable
     public View setEmptyView(@LayoutRes int layoutId) {
-        if (layoutId == 0)
-            return null;
-        return setEmptyView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
+        return setEmptyView(getViewByLayoutId(layoutId));
     }
 
     @Nullable
     public View setEmptyView(@Nullable View view) {
-        if (view != null) {
-            removeView(emptyView);
-            addView(view);
-            this.emptyView = view;
-        }
+        if (emptyView != null) removeView(emptyView);
+        if (view != null) addView(view);
+        this.emptyView = view;
         return this.emptyView;
     }
 
     @Nullable
     public View setRetryView(@LayoutRes int layoutId) {
-        if (layoutId == 0)
-            return null;
-        return setRetryView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
+        return setRetryView(getViewByLayoutId(layoutId));
     }
 
     @Nullable
     public View setRetryView(@Nullable View view) {
-        if (view != null) {
-            removeView(retryView);
-            addView(view);
-            this.retryView = view;
-        }
+        if (retryView != null) removeView(retryView);
+        if (view != null) addView(view);
+        this.retryView = view;
         return this.retryView;
     }
 
     @Nullable
     public View setContentView(@LayoutRes int layoutId) {
-        if (layoutId == 0)
-            return null;
-        return setContentView(LayoutInflater.from(getContext()).inflate(layoutId, this, false));
+        return setContentView(getViewByLayoutId(layoutId));
     }
 
     @Nullable
     public View setContentView(@Nullable View view) {
+        if (contentView != null) removeView(contentView);
         if (view != null) {
-            removeView(contentView);
             // contentView 把自己的 layoutParams 给了 PageStatusLayout，此时设置contentView充满父View
             addView(view, -1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            this.contentView = view;
         }
+        this.contentView = view;
         return this.contentView;
     }
 
