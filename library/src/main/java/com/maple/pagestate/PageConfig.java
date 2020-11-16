@@ -20,10 +20,13 @@ import androidx.core.content.ContextCompat;
  * @date ：2020/11/13
  */
 public interface PageConfig {
+    // Loading View
     @Nullable View loadingView(Context context);
+    // 空数据 View
     @Nullable View emptyView(Context context);
+    // 重试 View
     @Nullable View retryView(Context context);
-
+    // 页面状态变化监听
     PageChangeAction getPageChangeAction();
 
     /**
@@ -36,13 +39,15 @@ public interface PageConfig {
         CharSequence emptyInfo = "暂无数据";
         @DrawableRes int retryIconRes = R.drawable.ms_status_no_net;
         CharSequence retryInfo = "加载失败，请重试~";
+        PageChangeAction pageChangeListener = null;
 
         public Default() {}
 
         public Default(
                 @DrawableRes int loadingIconRes, CharSequence loadingInfo,
                 @DrawableRes int emptyIconRes, CharSequence emptyInfo,
-                @DrawableRes int retryIconRes, CharSequence retryInfo
+                @DrawableRes int retryIconRes, CharSequence retryInfo,
+                @Nullable PageChangeAction pageChangeListener
         ) {
             this.loadingIconRes = loadingIconRes;
             this.loadingInfo = loadingInfo;
@@ -50,6 +55,7 @@ public interface PageConfig {
             this.emptyInfo = emptyInfo;
             this.retryIconRes = retryIconRes;
             this.retryInfo = retryInfo;
+            this.pageChangeListener = pageChangeListener;
         }
 
         @Nullable
@@ -100,7 +106,7 @@ public interface PageConfig {
         @Nullable
         @Override
         public PageChangeAction getPageChangeAction() {
-            return null;
+            return pageChangeListener;
         }
     }
 }
