@@ -10,6 +10,7 @@ import com.maple.demo.config.MyPageConfig;
 import com.maple.pagestate.PageStateManager;
 
 /**
+ * PageStateManager 在 任意View 中的使用
  *
  * @author : shaoshuai
  * @date ：2020/08/17
@@ -24,7 +25,7 @@ public class AnyViewTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anyview_test);
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-         pageStateManager = new PageStateManager(mTextView, new MyPageConfig());
+        pageStateManager = new PageStateManager(mTextView, new MyPageConfig());
         pageStateManager.getEmptyView().setOnClickListener(v -> refreshTextView());
         pageStateManager.getRetryView().setOnClickListener(v -> {
             Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();

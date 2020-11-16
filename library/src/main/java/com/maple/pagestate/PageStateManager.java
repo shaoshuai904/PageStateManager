@@ -94,9 +94,6 @@ public class PageStateManager {
         contentParent.addView(mPageStateLayout, index, layoutParams);
 
         // 初始化默认配置页面
-//        setLoadingView(mConfig.loadingLayoutId());
-//        setEmptyView(mConfig.emptyLayoutId());
-//        setRetryView(mConfig.retryLayoutId());
         setLoadingView(mConfig.loadingView(mContext));
         setEmptyView(mConfig.emptyView(mContext));
         setRetryView(mConfig.retryView(mContext));

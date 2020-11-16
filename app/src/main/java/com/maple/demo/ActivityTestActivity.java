@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.maple.pagestate.PageStateManager;
 
 /**
+ * PageStateManager 直接在 Activity 中的使用
+ *
  * @author : shaoshuai
  * @date ：2020/08/17
  */
