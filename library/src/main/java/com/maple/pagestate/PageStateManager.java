@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
  * 提供对外方法，控制不同状态view的显示隐藏。
  * <p>
  * 获取目标view(contentView)在父View中的显示位置。
- * 将contentView的layoutParams给PageStatusLayout，
+ * 将contentView的layoutParams给PageStateLayout，
  * 同时设置contentView充满父View。实现完整的替换包裹效果。
  *
  * @author : shaoshuai

@@ -1,7 +1,7 @@
 # PageStateManager - 页面状态管理者
 
 [![API](https://img.shields.io/badge/API-19%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=19)
-[![jitpack](https://jitpack.io/v/shaoshuai904/PageStatusManager.svg)](https://jitpack.io/#shaoshuai904/PageStateManager)
+[![jitpack](https://jitpack.io/v/shaoshuai904/PageStateManager.svg)](https://jitpack.io/#shaoshuai904/PageStateManager)
 
 PageStateManager 可以作用于 `Activity` 、`Fragment`、任意 `View` 对象，
 作用对象将作为 `contentView`，通过PageConfig配置类，设置 `LoadingView`、`EmptyView`、`RetryView` 等状态视图。

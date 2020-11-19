@@ -207,7 +207,7 @@ public class PageStateLayout extends FrameLayout {
     public View setContentView(@Nullable View view) {
         if (contentView != null) removeView(contentView);
         if (view != null) {
-            // contentView 把自己的 layoutParams 给了 PageStatusLayout，此时设置contentView充满父View
+            // contentView 把自己的 layoutParams 给了 PageStateLayout，此时设置contentView充满父View
             addView(view, -1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         }
         this.contentView = view;

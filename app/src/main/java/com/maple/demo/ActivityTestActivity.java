@@ -22,7 +22,7 @@ public class ActivityTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_context);
 
-        // pageStatusManager = new PageStatusManager(this, new MyPageConfig());
+        // pageStateManager = new PageStateManager(this, new MyPageConfig());
         // 不传Config，将使用默认的
         pageStateManager = new PageStateManager(this);
         View emptyView = pageStateManager.getEmptyView();
