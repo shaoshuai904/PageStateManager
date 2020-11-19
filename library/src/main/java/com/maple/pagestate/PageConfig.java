@@ -27,7 +27,7 @@ public interface PageConfig {
     // 重试 View
     @Nullable View retryView(Context context);
     // 页面状态变化监听
-    PageChangeAction getPageChangeAction();
+    PageChangeListener getPageChangeListener();
 
     /**
      * 默认配置不满足需求的，请自定义配置
@@ -39,7 +39,7 @@ public interface PageConfig {
         CharSequence emptyInfo = "暂无数据";
         @DrawableRes int retryIconRes = R.drawable.ms_status_no_net;
         CharSequence retryInfo = "加载失败，请重试~";
-        PageChangeAction pageChangeListener = null;
+        PageChangeListener pageChangeListener = null;
 
         public Default() {}
 
@@ -47,7 +47,7 @@ public interface PageConfig {
                 @DrawableRes int loadingIconRes, CharSequence loadingInfo,
                 @DrawableRes int emptyIconRes, CharSequence emptyInfo,
                 @DrawableRes int retryIconRes, CharSequence retryInfo,
-                @Nullable PageChangeAction pageChangeListener
+                @Nullable PageChangeListener pageChangeListener
         ) {
             this.loadingIconRes = loadingIconRes;
             this.loadingInfo = loadingInfo;
@@ -105,7 +105,7 @@ public interface PageConfig {
 
         @Nullable
         @Override
-        public PageChangeAction getPageChangeAction() {
+        public PageChangeListener getPageChangeListener() {
             return pageChangeListener;
         }
     }

@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
 import com.maple.demo.R;
-import com.maple.pagestate.PageChangeAction;
+import com.maple.pagestate.PageChangeListener;
 import com.maple.pagestate.PageConfig;
 
 
@@ -55,10 +55,8 @@ public class MyPageConfig implements PageConfig {
 
     @Nullable
     @Override
-    public PageChangeAction getPageChangeAction() {
-        return new PageChangeAction() {
-
-        };
+    public PageChangeListener getPageChangeListener() {
+        return null;
     }
 }
 

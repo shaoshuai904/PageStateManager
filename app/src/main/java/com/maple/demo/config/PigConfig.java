@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 
 import com.maple.demo.R;
-import com.maple.pagestate.PageChangeAction;
+import com.maple.pagestate.PageChangeListener;
 import com.maple.pagestate.PageConfig;
 
 
@@ -46,11 +46,10 @@ public class PigConfig implements PageConfig {
 
     @Nullable
     @Override
-    public PageChangeAction getPageChangeAction() {
-        return new PageChangeAction() {
+    public PageChangeListener getPageChangeListener() {
+        return new PageChangeListener() {
             @Override
             public void onShowLoading(View loadingView) {
-                super.onShowLoading(loadingView);
                 ImageView ivLoading = loadingView.findViewById(R.id.iv_loading);
                 Drawable bg = ivLoading.getBackground();
                 if (bg instanceof AnimationDrawable) {
@@ -60,6 +59,15 @@ public class PigConfig implements PageConfig {
                     }
                 }
             }
+
+            @Override
+            public void onShowRetry(View retryView) { }
+
+            @Override
+            public void onShowEmpty(View emptyView) { }
+
+            @Override
+            public void onShowContent(View contentView) { }
         };
     }
 }

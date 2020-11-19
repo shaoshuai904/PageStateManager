@@ -144,9 +144,9 @@ public class PageStateLayout extends FrameLayout {
         }
     }
 
-    private PageChangeAction pageChangeAction = null;
+    private PageChangeListener pageChangeAction = null;
     // 设置页面变化监听
-    public void setPageStatusChangeAction(@Nullable PageChangeAction action) {
+    public void setPageStatusChangeAction(@Nullable PageChangeListener action) {
         pageChangeAction = action;
     }
 

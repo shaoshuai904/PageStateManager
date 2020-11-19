@@ -88,7 +88,7 @@ public class PageStateManager {
         ViewGroup.LayoutParams layoutParams = oldContent.getLayoutParams(); // 保存当前layout设置
         contentParent.removeView(oldContent);
         mPageStateLayout = new PageStateLayout(mContext);
-        mPageStateLayout.setPageStatusChangeAction(mConfig.getPageChangeAction());
+        mPageStateLayout.setPageStatusChangeAction(mConfig.getPageChangeListener());
         mPageStateLayout.setContentView(oldContent);
 
         contentParent.addView(mPageStateLayout, index, layoutParams);
