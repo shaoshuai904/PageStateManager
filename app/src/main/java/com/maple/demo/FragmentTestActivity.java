@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 /**
- *  Activity 中套一个 Fragment
+ * Activity 中套一个 Fragment
  *
  * @author : shaoshuai
  * @date ：2020/08/17

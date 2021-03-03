@@ -22,7 +22,7 @@ public class PageStateLayout extends FrameLayout {
     private View contentView = null; // 内容页
     private View loadingView = null;// loading页
     private View retryView = null;// 重试页
-    private View emptyView = null;// 空数据页o
+    private View emptyView = null;// 空数据页
 
     public PageStateLayout(@NonNull Context context) {
         super(context);
@@ -44,16 +44,16 @@ public class PageStateLayout extends FrameLayout {
         setClickable(true);  // 防止点击穿透
     }
 
-    @Nullable View getContentView() {
+    @Nullable public View getContentView() {
         return contentView;
     }
-    @Nullable View getLoadingView() {
+    @Nullable public View getLoadingView() {
         return loadingView;
     }
-    @Nullable View getRetryView() {
+    @Nullable public View getRetryView() {
         return retryView;
     }
-    @Nullable View getEmptyView() {
+    @Nullable public View getEmptyView() {
         return emptyView;
     }
 
@@ -151,15 +151,6 @@ public class PageStateLayout extends FrameLayout {
     }
 
     @Nullable
-    private View getViewByLayoutId(@LayoutRes int layoutId) {
-        View view = null;
-        if (layoutId != 0) {
-            view = LayoutInflater.from(getContext()).inflate(layoutId, this, false);
-        }
-        return view;
-    }
-
-    @Nullable
     public View setLoadingView(@LayoutRes int layoutId) {
         return setLoadingView(getViewByLayoutId(layoutId));
     }
@@ -214,4 +205,12 @@ public class PageStateLayout extends FrameLayout {
         return this.contentView;
     }
 
+    @Nullable
+    private View getViewByLayoutId(@LayoutRes int layoutId) {
+        View view = null;
+        if (layoutId != 0) {
+            view = LayoutInflater.from(getContext()).inflate(layoutId, this, false);
+        }
+        return view;
+    }
 }

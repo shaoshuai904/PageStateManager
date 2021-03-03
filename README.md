@@ -23,10 +23,11 @@ allprojects {
 ```
 
 **Step 2.** Add the dependency
+[![](https://jitpack.io/v/shaoshuai904/PageStateManager.svg)](https://jitpack.io/#shaoshuai904/PageStateManager)
 
 ```groovy
 dependencies {
-	implementation 'com.github.shaoshuai904:PageStateManager:1.0.1'
+	implementation 'com.github.shaoshuai904:PageStateManager:1.0.2'
 }
 ```
 

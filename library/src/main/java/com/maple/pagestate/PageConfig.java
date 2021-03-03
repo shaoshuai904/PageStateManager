@@ -20,11 +20,11 @@ import androidx.core.content.ContextCompat;
  * @date ：2020/11/13
  */
 public interface PageConfig {
-    // Loading View
+    // 加载中 视图
     @Nullable View loadingView(Context context);
-    // 空数据 View
+    // 空数据 视图
     @Nullable View emptyView(Context context);
-    // 重试 View
+    // 重试 视图
     @Nullable View retryView(Context context);
     // 页面状态变化监听
     PageChangeListener getPageChangeListener();

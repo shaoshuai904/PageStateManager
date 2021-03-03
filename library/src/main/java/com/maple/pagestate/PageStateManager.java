@@ -94,9 +94,9 @@ public class PageStateManager {
         contentParent.addView(mPageStateLayout, index, layoutParams);
 
         // 初始化默认配置页面
-        setLoadingView(mConfig.loadingView(mContext));
         setEmptyView(mConfig.emptyView(mContext));
         setRetryView(mConfig.retryView(mContext));
+        setLoadingView(mConfig.loadingView(mContext));
     }
 
     // 各状态图的显示、隐藏
